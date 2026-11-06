@@ -43,6 +43,7 @@ Cypress.Commands.add('geraToken', (email, senha) => {
         cy.request({
             method: 'POST',
             url: 'users',
+            failOnStatusCode: false,
             body: {
                 "name": nome,
                 "email": email,

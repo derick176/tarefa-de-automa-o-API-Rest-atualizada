@@ -33,7 +33,7 @@ beforeEach(() => {
     it('GET - Deve obter detalhes de um livro específico', () => {
             cy.api({
                     method: 'GET',
-                    url: '/books/10'
+                    url: '/books/1'
             }).should(response => {
                 expect(response.status).to.equal(200)
                 expect(response.body).to.be.an('object')
@@ -44,9 +44,9 @@ beforeEach(() => {
     // Verificar que apenas admin pode adicionar novos livros (validação de permissão)
     it('POST - Deve cadastrar um novo livro com sucesso', () => {
             const novoLivro = {
-                title: 'novo livro de acao',
-                author: 'livro de acao',
-                category: 'acao',
+                title: 'novo livro de ficcao1',
+                author: 'ficcao1',
+                category: 'ficcao',
                 isbn: '978-0-123456-78-6'
             }
             cy.api({
@@ -73,6 +73,7 @@ beforeEach(() => {
             method: 'POST',
             url: '/books',
             headers: { 'Authorization': token },
+            failOnStatusCode: false,
             body: livroInvalido
         }).should(response => {
             expect(response.status).to.equal(400)
@@ -84,14 +85,14 @@ beforeEach(() => {
     // Verificar que apenas admin pode atualizar livros (validação de permissão)
     it('PUT - Deve atualizar um livro previamente cadastrado', () => {
         const livroAtualizado = {
-            title: 'novo livro de acao atualizado',
-            author: 'livro de acao atualizado',
-            category: 'romance',
+            title: 'livro de acao atualizado',
+            author: 'ficcao1',
+            category: 'ficcao',
             isbn: '978-0-123456-78-6'
         }
         cy.api({
             method: 'PUT',
-            url: '/books/39',
+            url: '/books/40',
             headers: { 'Authorization': token },
             body: livroAtualizado
         }).should(response => {
@@ -105,7 +106,7 @@ beforeEach(() => {
     it('DELETE - Deve deletar um livro previamente cadastrado', () => {
         cy.api({
             method: 'DELETE',
-            url: '/books/39',
+            url: '/books/21',
             headers: { 'Authorization': token }
         }).should(response => {
             expect(response.status).to.equal(200)
